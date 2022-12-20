@@ -5,5 +5,5 @@ import '../models/album_model.dart';
 class AlbumRepo{
   AlbumRepo( {required this.apiService});
   ApiService apiService;
-  Future<Album?> getMyAlbum (int id)=>apiService.getSingleAlbumById(id);
+  Future<MyResponse> getMyAlbum (int id)=>apiService.getSingleAlbumById(id);
 }
