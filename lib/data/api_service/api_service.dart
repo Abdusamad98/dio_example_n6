@@ -1,17 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:dio_example_n6/data/api_service/api_client.dart';
-import 'package:dio_example_n6/data/api_service/custom_exceptions.dart';
 import 'package:dio_example_n6/data/models/album_model.dart';
+import 'package:dio_example_n6/data/models/my_response/my_response.dart';
+import 'package:dio_example_n6/data/models/tranfer/transaction_model.dart';
 
-class MyResponse {
-  MyResponse({
-    this.data,
-    required this.error,
-  });
-
-  dynamic data;
-  String error = "";
-}
 
 class ApiService extends ApiClient {
 
@@ -40,6 +32,22 @@ class ApiService extends ApiClient {
       if (response.statusCode == 200) {
          myResponse.data=(response.data as List?)
             ?.map((e) => Album.fromJson(e))
+            .toList() ??
+            [];
+      }
+    } catch (err) {
+      myResponse.error=err.toString();
+    }
+    return myResponse;
+  }
+
+  Future<MyResponse> getAllTransactions() async {
+    MyResponse myResponse = MyResponse(error: "");
+    try {
+      Response response = await dio.get("${dio.options.baseUrl}/transactions-expenses");
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        myResponse.data=(response.data as List?)
+            ?.map((e) => TransactionModel.fromJson(e))
             .toList() ??
             [];
       }

@@ -1,12 +1,18 @@
-import 'package:dio_example_n6/album_view_model.dart';
+import 'package:dio_example_n6/transactions_view_model.dart';
 import 'package:dio_example_n6/data/api_service/api_service.dart';
-import 'package:dio_example_n6/data/repository/album_repo.dart';
-import 'package:dio_example_n6/simple_usage.dart';
+import 'package:dio_example_n6/data/repository/transactions_repo.dart';
+import 'package:dio_example_n6/ui/transactions/simple_usage.dart';
+import 'package:dio_example_n6/ui/upload_file/upload_file_toserver.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(create: (context)=>AlbumViewModel(albumRepo: AlbumRepo(apiService: ApiService())),child: MyApp(),));
+  runApp(ChangeNotifierProvider(
+    create: (context) => TransactionsViewModel(
+      transactionsRepo: TransactionsRepo(apiService: ApiService()),
+    ),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,9 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SimpleUsage(),
+      home: UploadFileToServer(),
     );
   }
 }
-
-

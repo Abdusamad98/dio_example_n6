@@ -13,7 +13,7 @@ class ApiClient{
   _init(){
     dio = Dio(
       BaseOptions(
-        baseUrl: "https://jsonplaceholder.typicode.com",
+        baseUrl: "https://banking-api.free.mockoapp.net",//"https://jsonplaceholder.typicode.com",
         connectTimeout: 25000,
         receiveTimeout: 20000,
       ),

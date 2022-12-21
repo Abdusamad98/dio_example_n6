@@ -1,4 +1,6 @@
-import 'package:dio_example_n6/album_view_model.dart';
+import 'package:dio_example_n6/data/models/tranfer/data_model.dart';
+import 'package:dio_example_n6/data/models/tranfer/transaction_model.dart';
+import 'package:dio_example_n6/transactions_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
@@ -44,37 +46,33 @@ class _SimpleUsageState extends State<SimpleUsage> {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Simple usage"),
+          title: const Text("Transactions"),
         ),
-        body: Consumer<AlbumViewModel>(
+        body: Consumer<TransactionsViewModel>(
           builder: (context, viewModel, child) {
-            if (viewModel.errorForUI.isNotEmpty) {
-              return Center(
-                child: Text(viewModel.errorForUI),
-              );
-            }
-
-            return viewModel.album != null
-                ? Column(
-                    children: [
-                      TextField(),
-                      Text(viewModel.album!.title),
-                      Text(viewModel.album!.id.toString()),
-                      Text(viewModel.album!.userId.toString()),
-                      SizedBox(
-                        height: 400,
-                        width: double.infinity,
-                        child: WebViewWidget(
-                          controller: webViewController,
-                        ),
-                      ),
-                    ],
-                  )
-                : ElevatedButton(
-                    onPressed: () {
-                      context.read<AlbumViewModel>().fetchAlbum(5);
-                    },
-                    child: Text("Get Data"),
+            return viewModel.transactions.isEmpty
+                ? Center(child: Text(viewModel.transactions.length.toString()))
+                : ListView(
+                    children:
+                        List.generate(viewModel.transactions.length, (index) {
+                      TransactionModel upperListItem =
+                          viewModel.transactions[index];
+                      return ListView(
+                        shrinkWrap: true,
+                        children: [
+                          Text(
+                            upperListItem.transferDate,
+                            style: TextStyle(color: Colors.red, fontSize: 40),
+                          ),
+                          ...List.generate(upperListItem.data.length, (index) {
+                            DataModel innerList = upperListItem.data[index];
+                            return Padding(
+                                padding: EdgeInsets.all(24),
+                                child: Text(innerList.receiver.name));
+                          })
+                        ],
+                      );
+                    }),
                   );
           },
         ),
