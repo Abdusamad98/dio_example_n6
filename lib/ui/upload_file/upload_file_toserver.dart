@@ -30,28 +30,33 @@ class _UploadFileToServerState extends State<UploadFileToServer> {
       appBar: AppBar(
         title: const Text("Upload file"),
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
-              onPressed: () async {
-                File? f = await selectFile();
-                if (f != null) {
-                  file = f;
-                  String st =
-                      await UploadApiService.uploadProfileImage(file: f);
-                  setState(() {
-                    status = st;
-                  });
-                }
-              },
-              child: const Text("Select file")),
-          ElevatedButton(onPressed: () {}, child: const Text("Upload  file")),
-          Text(
-            status,
-            style: const TextStyle(fontSize: 40, color: Colors.tealAccent),
-          ),
-          file!=null? Image.file(file!):SizedBox(),
-        ],
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () async {
+                  File? f = await selectFile();
+                  if (f != null) {
+                    file = f;
+                    String st =
+                        await UploadApiService.uploadProfileImage(file: f);
+                    setState(() {
+                      status = st;
+                    });
+                  }
+                },
+                child: const Text("Select file")),
+            ElevatedButton(onPressed: () {}, child: const Text("Upload  file")),
+            Text(
+              status,
+              style: const TextStyle(fontSize: 40, color: Colors.tealAccent),
+            ),
+            file!=null? Image.file(file!,height: 300,):SizedBox(),
+          ],
+        ),
       ),
     );
   }
