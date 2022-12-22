@@ -1,6 +1,6 @@
 import 'package:dio_example_n6/data/models/tranfer/data_model.dart';
 import 'package:dio_example_n6/data/models/tranfer/transaction_model.dart';
-import 'package:dio_example_n6/transactions_view_model.dart';
+import 'package:dio_example_n6/view_models/transactions_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';

@@ -1,4 +1,7 @@
-import 'package:dio_example_n6/transactions_view_model.dart';
+import 'package:dio_example_n6/data/repository/dynamic_view_repo.dart';
+import 'package:dio_example_n6/ui/dynamic_view_screen/dynamic_views_screen.dart';
+import 'package:dio_example_n6/view_models/dynamic_view_model.dart';
+import 'package:dio_example_n6/view_models/transactions_view_model.dart';
 import 'package:dio_example_n6/data/api_service/api_service.dart';
 import 'package:dio_example_n6/data/repository/transactions_repo.dart';
 import 'package:dio_example_n6/ui/transactions/simple_usage.dart';
@@ -8,8 +11,8 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-    create: (context) => TransactionsViewModel(
-      transactionsRepo: TransactionsRepo(apiService: ApiService()),
+    create: (context) => DynamicViewModel(
+      dynamicFieldsRepo: DynamicFieldsRepo(apiService: ApiService()),
     ),
     child: MyApp(),
   ));
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: UploadFileToServer(),
+      home: DynamicViewPage(),
     );
   }
 }
