@@ -30,9 +30,7 @@ class ApiService extends ApiClient {
     try {
       Response response = await dio.get("${dio.options.baseUrl}/albums");
       if (response.statusCode == 200) {
-        myResponse.data =
-            (response.data as List?)?.map((e) => Album.fromJson(e)).toList() ??
-                [];
+        myResponse.data = (response.data as List?)?.map((e) => Album.fromJson(e)).toList() ?? [];
       }
     } catch (err) {
       myResponse.error = err.toString();
@@ -41,39 +39,42 @@ class ApiService extends ApiClient {
   }
 
   Future<MyResponse> getAllTransactions() async {
-    MyResponse myResponse = MyResponse(error: "");
-    try {
-      Response response =
-          await dio.get("${dio.options.baseUrl}/transactions-expenses");
-      if (response.statusCode! >= 200 && response.statusCode! < 300) {
-        myResponse.data = (response.data as List?)
-                ?.map((e) => TransactionModel.fromJson(e))
-                .toList() ??
-            [];
-      }
-    } catch (err) {
-      myResponse.error = err.toString();
+    MyResponse response = await getResponse('/transactions-expenses');
+
+    if (response is MyResponseSuccess) {
+      return MyResponseSuccess(
+          (response.data as List?)?.map((e) => TransactionModel.fromJson(e)).toList() ?? []);
     }
-    return myResponse;
+
+    return response;
   }
 
   Future<MyResponse> getDynamicFields() async {
-    MyResponse myResponse = MyResponse(error: "");
+    MyResponse myResponse = MyResponseError("");
     var dio = Dio();
     try {
-      Response response =
-          await dio.get("https://dynamic-view-api.free.mockoapp.net/dynamic");
+      Response response = await dio.get("https://dynamic-view-api.free.mockoapp.net/dynamic");
 
       if (response.statusCode == HttpStatus.ok) {
-        myResponse.data = (response.data["fields"] as List?)
-                ?.map((e) => InputModel.fromJson(e))
-                .toList() ??
-            [];
+        myResponse.data =
+            (response.data["fields"] as List?)?.map((e) => InputModel.fromJson(e)).toList() ?? [];
       }
     } catch (error) {
       myResponse.error = "error";
     }
 
     return myResponse;
+  }
+
+  Future<MyResponse> getResponse(String endpoint) async {
+    try {
+      Response response = await dio.get("${dio.options.baseUrl}$endpoint");
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return MyResponseSuccess(response.data);
+      }
+      return MyResponseSuccess('Unknown error. code: ${response.statusCode}');
+    } catch (err) {
+      return MyResponseError(err.toString());
+    }
   }
 }

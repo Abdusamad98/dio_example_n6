@@ -1,10 +1,12 @@
+abstract class MyResponse {}
 
-class MyResponse {
-  MyResponse({
-    this.data,
-    required this.error,
-  });
+class MyResponseSuccess extends MyResponse {
+  final dynamic data;
+  MyResponseSuccess(this.data);
+}
 
-  dynamic data;
-  String error = "";
+class MyResponseError extends MyResponse {
+  final String error;
+
+  MyResponseError(this.error);
 }
