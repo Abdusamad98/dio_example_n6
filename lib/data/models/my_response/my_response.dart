@@ -1,3 +1,4 @@
+
 abstract class MyResponse {}
 
 class MyResponseSuccess extends MyResponse {

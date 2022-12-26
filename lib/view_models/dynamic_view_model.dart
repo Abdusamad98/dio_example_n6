@@ -21,13 +21,13 @@ class DynamicViewModel extends ChangeNotifier {
 
   fetchDynamicFields() async {
     MyResponse myResponse = await dynamicFieldsRepo.getDynamicData();
-    if (myResponse.error.isEmpty) {
+    if (myResponse is MyResponseSuccess) {
       dynamicFields = myResponse.data as List<InputModel>;
       for (int i = 0; i < dynamicFields.length; i++) {
         fields[dynamicFields[i].code] = "";
       }
     } else {
-      errorForUI = myResponse.error;
+      errorForUI = (myResponse as MyResponseError).error;
     }
     notifyListeners();
   }

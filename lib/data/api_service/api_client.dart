@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:dio_example_n6/data/api_service/custom_exceptions.dart';
 import 'package:flutter/cupertino.dart';
-
+const String baseUrl1= "https://jsonplaceholder.typicode.com";
+const String baseUrl2= "https://banking-api.free.mockoapp.net";
+const String baseUrl3= "https://dynamic-view-api.free.mockoapp.net/dynamic";
 class ApiClient{
 
   ApiClient(){
@@ -13,7 +15,6 @@ class ApiClient{
   _init(){
     dio = Dio(
       BaseOptions(
-        baseUrl: "https://banking-api.free.mockoapp.net",//"https://jsonplaceholder.typicode.com",
         connectTimeout: 25000,
         receiveTimeout: 20000,
       ),

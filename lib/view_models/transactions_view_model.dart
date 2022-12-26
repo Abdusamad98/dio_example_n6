@@ -17,10 +17,10 @@ class TransactionsViewModel extends ChangeNotifier {
 
   fetchTransactions() async {
     MyResponse myResponse = await transactionsRepo.getAllTransactions();
-    if (myResponse.error.isEmpty) {
+    if (myResponse is MyResponseSuccess) {
       transactions = myResponse.data as List<TransactionModel>;
     } else {
-      errorForUI = myResponse.error;
+      errorForUI = (myResponse as MyResponseError).error;
     }
     notifyListeners();
   }
