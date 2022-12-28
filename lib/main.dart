@@ -1,4 +1,5 @@
 import 'package:dio_example_n6/data/repository/dynamic_view_repo.dart';
+import 'package:dio_example_n6/services/service_locator.dart';
 import 'package:dio_example_n6/ui/dynamic_view_screen/dynamic_views_screen.dart';
 import 'package:dio_example_n6/view_models/dynamic_view_model.dart';
 import 'package:dio_example_n6/view_models/transactions_view_model.dart';
@@ -10,10 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  setUpLocators();
   runApp(ChangeNotifierProvider(
-    create: (context) => DynamicViewModel(
-      dynamicFieldsRepo: DynamicFieldsRepo(apiService: ApiService()),
-    ),
+    create: (context) => DynamicViewModel(),
     child: MyApp(),
   ));
 }

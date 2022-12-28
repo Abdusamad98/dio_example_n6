@@ -19,6 +19,7 @@ dependencies:
   keyboard_dismisser: ^3.0.0
   webview_flutter: ^4.0.0
   file_picker: ^5.2.4
+  get_it: ^7.2.0
 
 
 dev_dependencies:
@@ -26,6 +27,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  build_runner: ^2.2.0
 
 
 flutter_native_splash:
